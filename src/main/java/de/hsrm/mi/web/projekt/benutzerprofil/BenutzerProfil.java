@@ -2,6 +2,7 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -111,8 +112,8 @@ public class BenutzerProfil {
         return true;
     }
     
-    public List<String> getInteressenListe(){
-        List<String> interessenListe= new ArrayList<String>();
+    public List<String> getInteressenListe(String input){
+        List<String> interessenListe = Arrays.asList(input.split("\\s*,\\s*"));
         return interessenListe;
     }
     
