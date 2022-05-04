@@ -1,7 +1,6 @@
 package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 public class BenutzerProfil {
     
     private String name = "";
-    @DateTimeFormat(iso = ISO.TIME)
+    @DateTimeFormat(iso = ISO.DATE)
     private LocalDate geburtsdatum;
     private String adresse;
     private String email;
