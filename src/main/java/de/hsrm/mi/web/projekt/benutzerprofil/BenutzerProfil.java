@@ -111,8 +111,8 @@ public class BenutzerProfil {
         return true;
     }
     
-    public List<String> getInteressenListe(String input){
-        List<String> interessenListe = Arrays.asList(input.split("\\s*,\\s*"));
+    public List<String> getInteressenListe(){
+        List<String> interessenListe = Arrays.asList(interessen.split("\\s*,\\s*"));
         return interessenListe;
     }
     

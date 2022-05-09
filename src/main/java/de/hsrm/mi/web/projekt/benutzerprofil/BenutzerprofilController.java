@@ -6,12 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+
 @RequestMapping("/")
+@SessionAttributes(names = {"profil"})
 public class BenutzerprofilController {
 
     Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
@@ -20,13 +24,18 @@ public class BenutzerprofilController {
     @ModelAttribute("profil")
     public void initProfil(Model m){
         BenutzerProfil profil = new  BenutzerProfil();
+        m.addAttribute("profil", profil);
+
+        /*
+        BenutzerProfil profil = new  BenutzerProfil();
         profil.setName("Marc");
         profil.setGeburtsdatum(LocalDate.of(1,1,1));
         profil.setAdresse("Altenbacher Straße");
         profil.setEmail("marc.bachmann@mail.com");
         profil.setLieblingsfarbe("Blau");
         profil.setInteressen("Programmieren, Schlafen");
-
+        
+        
         m.addAttribute("profil", profil);
         m.addAttribute("name", profil.getName());
         m.addAttribute("geburtsdatum", profil.getGeburtsdatum());
@@ -34,6 +43,8 @@ public class BenutzerprofilController {
         m.addAttribute("email", profil.getEmail());
         m.addAttribute("lieblingsfarbe", profil.getLieblingsfarbe());
         m.addAttribute("interessen", profil.getInteressenListe(profil.getInteressen()));
+        */
+        
     }
 
     @GetMapping("/benutzerprofil")
@@ -42,5 +53,17 @@ public class BenutzerprofilController {
         return "/benutzerprofil/profilansicht";
     }
 
+    @GetMapping("/benutzerprofil/bearbeiten")
+    public String bearbeiten_get(Model m){
+    //    m.addAttribute("formular" new Formular());
+        return "/benutzerprofil/profileditor";
+    }
+
+    @PostMapping("/benutzerprofil/bearbeiten")  
+    public String postForm(@ModelAttribute("profil") BenutzerProfil profil){
+
+  
+        return "redirect:/benutzerprofil";
+    }
 
 }

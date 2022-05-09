@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benutzerprofil</title>
+</head>
+<body>
+    <h1>Benutzerprofil Bearbeitungsmodus</h1>
+    <h2>Ihre Daten</h2>
+    <form th:action="@{/benutzerprofil/bearbeiten}" th:method="POST" th:object="${profil}">
+        <label for="name"><b>Name:</b></label><br>
+        <input type="text" id="name" name="name" th:field="*{name}"></input><br><br>
+        <label for="geburtsdatum"><b>Geburtsdatum:</b></label><br>
+        <input type="date" id="geburtsdatum" name="geburtsdatum" th:field="*{geburtsdatum}"></input><br><br>
+        <label for="adresse"><b>Adresse:</b></label><br>
+        <input type="text" id="adresse" name="adresse" th:field="*{adresse}"></input><br><br>
+        <label for="email"><b>E-Mail:</b></label><br>
+        <input type="text" id="email" name="email" th:field="*{email}"></input><br><br>
+        <label for="lieblingsfarbe"><b>Lieblingsfarbe:</b></label><br>
+        <input type="color" id="lieblingsfarbe" name="lieblingsfarbe" th:field="*{lieblingsfarbe}"></input><br><br>
+        <label for="interessen"><b>Interessen</b>(durch komma getrennt):</label><br>
+        <input type="text" id="interessen" name="interessen" th:field="*{interessen}"></input><br><br>
+        <input type="submit" name="abschicken"/>
+    </form>
+</body>
+</html>

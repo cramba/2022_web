@@ -12,29 +12,31 @@
     <table>
         <tr>
             <td><b>Name</b></td>
-            <td th:text="${name}">kein Name angegeben</td>
+            <td th:text="${profil.name}">kein Name angegeben</td>
         </tr>
         <tr>
             <td><b>Geburtsdatum</b></td>
-            <td th:text="${geburtsdatum}">kein Geburtsdatum angegeben</td>
+            <td th:text="${profil.geburtsdatum}">kein Geburtsdatum angegeben</td>
         </tr>
         <tr>
             <td><b>Adresse</b></td>
-            <td th:text="${adresse}">keine Adresse angegeben</td>
+            <td th:text="${profil.adresse}">keine Adresse angegeben</td>
         </tr>
         <tr>
             <td><b>E-Mail</b></td>
-            <td th:text="${email}">keine E-Mail angegeben</td>
+            <td th:text="${profil.email}">keine E-Mail angegeben</td>
         </tr>
         <tr>
             <td><b>Lieblingsfarbe</b></td>
-            <td th:text="${lieblingsfarbe}">keine Lieblingsfarbe angegeben</td>
+            <td th:text="${profil.lieblingsfarbe}">keine Lieblingsfarbe angegeben</td>
         </tr>
     </table>
     <h3>Interessen</h3>
     <ol>
-        <li th:if="${#lists.size(interessen)} > 0" th:each="s: ${interessen}" th:text="${s}"></li>
+        <li th:if="${#lists.size(profil.interessen)} > 0" th:each="s: ${profil.getInteressenListe()}" th:text="${s}"></li>
     </ol>
+
+    <button onclick="window.location.href='/benutzerprofil/bearbeiten'">Bearbeiten</button>
 
 
 </body>
