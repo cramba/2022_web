@@ -1,6 +1,7 @@
 package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -111,9 +112,16 @@ public class BenutzerProfil {
         return true;
     }
     
-    public List<String> getInteressenListe(){
-        List<String> interessenListe = Arrays.asList(interessen.split("\\s*,\\s*"));
-        return interessenListe;
-    }
     
+
+    public List<String> getInteressenListe(){
+        List<String> interessenListe = new ArrayList<>();
+        if(interessen.equals("")){
+            //interessen="17";
+            return interessenListe;
+        }else{
+            interessenListe = Arrays.asList(interessen.split("\\s*,\\s*"));
+            return interessenListe;
+        }
+    }
 }
