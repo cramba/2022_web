@@ -8,26 +8,28 @@
 </head>
 <body>
     <h1 th:text="#{profile}">Benutzerprofil</h1>
+    <a th:href="@{?sprache=de}">DE</a>
+    <a th:href="@{?sprache=en}">EN</a>
     <h2 th:text="#{data}">Ihre Daten</h2>
     <table>
         <tr>
-            <td th:text="#{name}"><b>Name</b></td>
+            <td><b th:text="#{name}">Name</b></td>
             <td th:text="${profil.name}">kein Name angegeben</td>
         </tr>
         <tr>
-            <td th:text="#{date}"><b>Geburtsdatum</b></td>
+            <td><b th:text="#{date}">Geburtsdatum</b></td>
             <td th:text="${profil.geburtsdatum}">kein Geburtsdatum angegeben</td>
         </tr>
         <tr>
-            <td th:text="#{adress}"><b>Adresse</b></td>
+            <td><b th:text="#{adress}">Adresse</b></td>
             <td th:text="${profil.adresse}">keine Adresse angegeben</td>
         </tr>
         <tr>
-            <td th:text="#{mail}"><b>E-Mail</b></td>
+            <td><b th:text="#{mail}">E-Mail</b></td>
             <td th:text="${profil.email}">keine E-Mail angegeben</td>
         </tr>
         <tr>
-            <td th:text="#{color}"><b>Lieblingsfarbe</b></td>
+            <td><b th:text="#{color}">Lieblingsfarbe</b></td>
             <td th:text="${profil.lieblingsfarbe}">keine Lieblingsfarbe angegeben</td>
         </tr>
     </table>

@@ -1,6 +1,6 @@
 package de.hsrm.mi.web.projekt.benutzerprofil;
 
-import java.time.LocalDate;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -52,7 +52,6 @@ public class BenutzerprofilController {
 
     @GetMapping("/benutzerprofil")
     public String benutzerprofil_get() {
-        
         return "/benutzerprofil/profilansicht";
     }
 

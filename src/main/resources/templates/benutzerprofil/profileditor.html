@@ -13,6 +13,8 @@
 </head>
 <body>
     <h1>Benutzerprofil Bearbeitungsmodus</h1>
+    <a th:href="@{?sprache=de}">DE</a>
+    <a th:href="@{?sprache=en}">EN</a>
     <h2>Ihre Daten</h2>
     <form th:action="@{/benutzerprofil/bearbeiten}" th:method="POST" th:object="${profil}">
         <label for="name"><b>Name:</b></label><br>
