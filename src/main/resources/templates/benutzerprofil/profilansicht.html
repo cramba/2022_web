@@ -7,31 +7,31 @@
     <title>Benutzerprofil</title>
 </head>
 <body>
-    <h1>Benutzerprofil</h1>
-    <h2>Ihre Daten</h2>
+    <h1 th:text="#{profile}">Benutzerprofil</h1>
+    <h2 th:text="#{data}">Ihre Daten</h2>
     <table>
         <tr>
-            <td><b>Name</b></td>
+            <td th:text="#{name}"><b>Name</b></td>
             <td th:text="${profil.name}">kein Name angegeben</td>
         </tr>
         <tr>
-            <td><b>Geburtsdatum</b></td>
+            <td th:text="#{date}"><b>Geburtsdatum</b></td>
             <td th:text="${profil.geburtsdatum}">kein Geburtsdatum angegeben</td>
         </tr>
         <tr>
-            <td><b>Adresse</b></td>
+            <td th:text="#{adress}"><b>Adresse</b></td>
             <td th:text="${profil.adresse}">keine Adresse angegeben</td>
         </tr>
         <tr>
-            <td><b>E-Mail</b></td>
+            <td th:text="#{mail}"><b>E-Mail</b></td>
             <td th:text="${profil.email}">keine E-Mail angegeben</td>
         </tr>
         <tr>
-            <td><b>Lieblingsfarbe</b></td>
+            <td th:text="#{color}"><b>Lieblingsfarbe</b></td>
             <td th:text="${profil.lieblingsfarbe}">keine Lieblingsfarbe angegeben</td>
         </tr>
     </table>
-    <h3>Interessen</h3>
+    <h3 th:text="#{interests}">Interessen</h3>
     <ol>
         <li th:if="${#lists.size(profil.interessen)} > 0" th:each="s: ${profil.getInteressenListe()}" th:text="${s}"></li>
     </ol>

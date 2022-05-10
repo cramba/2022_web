@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -13,19 +15,23 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+
+
 public class BenutzerProfil {
-    @Size(min=3, max=60) @NotNull
+    @Size(min=3, max=60) @NotNull @NotBlank
     private String name;
     @DateTimeFormat(iso = ISO.DATE)
     @Past @NotNull
     private LocalDate geburtsdatum;
+    @NotNull @NotBlank
     private String adresse;
     @Email
     private String email;
     private String lieblingsfarbe;
-    @NotNull
+    @NotNull @NotBlank
     private String interessen;
 
+    @Valid
     public BenutzerProfil(){
         name = "Marc";
         geburtsdatum = LocalDate.of(1,1,1);

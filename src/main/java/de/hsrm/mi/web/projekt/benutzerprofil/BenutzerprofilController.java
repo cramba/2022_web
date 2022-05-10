@@ -2,6 +2,7 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import java.time.LocalDate;
 
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -61,11 +62,8 @@ public class BenutzerprofilController {
     }
 
     @PostMapping("/benutzerprofil/bearbeiten")  
-    public String postForm(@ModelAttribute("profil") BenutzerProfil profil, BindingResult result){
-        System.out.println("POST");
+    public String postForm(@Valid @ModelAttribute("profil") BenutzerProfil profil, BindingResult result){
         if(result.hasErrors()){
-
-            System.out.println("ERROR");
             return "/benutzerprofil/profileditor";
         }
   
