@@ -2,8 +2,11 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import java.time.LocalDate;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-
 @RequestMapping("/")
 @SessionAttributes(names = {"profil"})
 public class BenutzerprofilController {
-
+    Validator vali;
     Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
     
 
@@ -55,13 +57,17 @@ public class BenutzerprofilController {
 
     @GetMapping("/benutzerprofil/bearbeiten")
     public String bearbeiten_get(Model m){
-    //    m.addAttribute("formular" new Formular());
         return "/benutzerprofil/profileditor";
     }
 
     @PostMapping("/benutzerprofil/bearbeiten")  
-    public String postForm(@ModelAttribute("profil") BenutzerProfil profil){
+    public String postForm(@ModelAttribute("profil") BenutzerProfil profil, BindingResult result){
+        System.out.println("POST");
+        if(result.hasErrors()){
 
+            System.out.println("ERROR");
+            return "/benutzerprofil/profileditor";
+        }
   
         return "redirect:/benutzerprofil";
     }

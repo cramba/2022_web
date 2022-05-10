@@ -5,24 +5,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 public class BenutzerProfil {
-    
-    private String name = "";
+    @Size(min=3, max=60) @NotNull
+    private String name;
     @DateTimeFormat(iso = ISO.DATE)
+    @Past @NotNull
     private LocalDate geburtsdatum;
     private String adresse;
+    @Email
     private String email;
     private String lieblingsfarbe;
+    @NotNull
     private String interessen;
 
     public BenutzerProfil(){
-        name = "";
+        name = "Marc";
         geburtsdatum = LocalDate.of(1,1,1);
         adresse = "";
-        email = "";
+        email = null;
         lieblingsfarbe = "";
         interessen = "";
     }
