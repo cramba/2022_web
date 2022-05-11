@@ -17,7 +17,7 @@ public class InternationalConfiguration implements WebMvcConfigurer {
     public LocaleResolver localeResolver() {
         SessionLocaleResolver resolver = new SessionLocaleResolver();
         //Optional: Browser-Preferenz übersteuern
-        resolver.setDefaultLocale(Locale.US);
+        //resolver.setDefaultLocale(Locale.US);
         return resolver;
     }
 

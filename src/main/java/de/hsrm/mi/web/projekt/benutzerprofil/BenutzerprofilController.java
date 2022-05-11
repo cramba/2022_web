@@ -1,8 +1,8 @@
 package de.hsrm.mi.web.projekt.benutzerprofil;
 
-import java.util.Locale;
 
 import javax.validation.Valid;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +25,10 @@ public class BenutzerprofilController {
     
 
     @ModelAttribute("profil")
-    public void initProfil(Model m){
+    public void initProfil(Locale locale, Model m){
         BenutzerProfil profil = new  BenutzerProfil();
         m.addAttribute("profil", profil);
+        m.addAttribute("sprache", locale.getDisplayLanguage());
 
         /*
         BenutzerProfil profil = new  BenutzerProfil();
