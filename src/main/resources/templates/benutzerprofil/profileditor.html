@@ -12,36 +12,37 @@
     <title>Benutzerprofil</title>
 </head>
 <body>
-    <h1>Benutzerprofil Bearbeitungsmodus</h1>
+    <h1 th:text="#{profile}">Benutzerprofil Bearbeitungsmodus</h1>
     <a th:href="@{?sprache=de}">DE</a>
     <a th:href="@{?sprache=en}">EN</a>
-    <h2>Ihre Daten</h2>
+    <h2 th:text="#{data}">Ihre Daten</h2>
     <form th:action="@{/benutzerprofil/bearbeiten}" th:method="POST" th:object="${profil}">
-        <label for="name"><b>Name:</b></label><br>
+        <label for="name"><b th:text="#{name}">Name:</b></label><br>
         <input type="text" id="name" name="name" th:field="*{name}" th:errorclass="fehler"></input><br>
         <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label><br><br>
 
-        <label for="geburtsdatum"><b>Geburtsdatum:</b></label><br>
+        <label for="geburtsdatum"><b th:text="#{date}">Geburtsdatum:</b></label><br>
         <input type="date" id="geburtsdatum" name="geburtsdatum" th:field="*{geburtsdatum}" th:errorclass="fehler"></input><br>
         <label th:if="${#fields.hasErrors('geburtsdatum')}" th:errors="*{geburtsdatum}"></label><br><br>
 
-        <label for="adresse"><b>Adresse:</b></label><br>
+        <label for="adresse"><b th:text="#{adress}">Adresse:</b></label><br>
         <input type="text" id="adresse" name="adresse" th:field="*{adresse}" th:errorclass="fehler"></input><br>
         <label th:if="${#fields.hasErrors('adresse')}" th:errors="*{adresse}"></label><br><br>
 
-        <label for="email"><b>E-Mail:</b></label><br>
+        <label for="email"><b th:text="#{mail}">E-Mail:</b></label><br>
         <input type="text" id="email" name="email" th:field="*{email}" th:errorclass="fehler"></input><br>
         <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label><br><br>
 
-        <label for="lieblingsfarbe"><b>Lieblingsfarbe:</b></label><br>
+        <label for="lieblingsfarbe"><b th:text="#{color}">Lieblingsfarbe:</b></label><br>
         <input type="color" id="lieblingsfarbe" name="lieblingsfarbe" th:field="*{lieblingsfarbe}" th:errorclass="fehler"></input><br>
         <label th:if="${#fields.hasErrors('lieblingsfarbe')}" th:errors="*{lieblingsfarbe}"></label><br><br>
 
-        <label for="interessen"><b>Interessen</b>(durch komma getrennt):</label><br>
+        <label for="interessen"><b th:text="#{interestsseperated}">Interessen</b>(durch komma getrennt):</label><br>
         <input type="text" id="interessen" name="interessen" th:field="*{interessen}" th:errorclass="fehler"></input><br>
         <label th:if="${#fields.hasErrors('interessen')}" th:errors="*{interessen}"></label><br><br>
 
-        <input type="submit" name="abschicken"/>
+        <input type="submit" name="abschicken" th:value="#{save}"/>
+        <button onclick="window.location.href='/benutzerprofil'" th:text="#{cancel}" type="reset">Zurück</button>
     </form>
 </body>
 </html>
