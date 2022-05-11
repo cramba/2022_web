@@ -1,4 +1,4 @@
-package configuration;
+package de.hsrm.mi.web.projekt.configuration;
 
 
 import java.util.Locale;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @Configuration
 public class InternationalConfiguration implements WebMvcConfigurer {
     @Bean
-    public LocaleResolver localeResolver() {
+    public SessionLocaleResolver localeResolver() {
         SessionLocaleResolver resolver = new SessionLocaleResolver();
         //Optional: Browser-Preferenz übersteuern
         //resolver.setDefaultLocale(Locale.US);
