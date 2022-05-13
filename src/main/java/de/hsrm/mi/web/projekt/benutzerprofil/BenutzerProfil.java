@@ -9,8 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -21,13 +22,13 @@ public class BenutzerProfil {
     @Size(min=3, max=60) @NotNull @NotBlank
     private String name;
     @DateTimeFormat(iso = ISO.DATE)
-    @Past @NotNull
+    @PastOrPresent @NotNull
     private LocalDate geburtsdatum;
-    @NotNull @NotBlank
+    @NotBlank
     private String adresse;
     @Email
     private String email;
-    //@Bunt @NotNull
+    @Bunt @NotNull
     private String lieblingsfarbe;
     @NotNull @NotBlank
     private String interessen;
