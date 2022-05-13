@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy=BuntValidator.class)
 
 public @interface Bunt {
-    String message() default "Wert ist nicht Bunt genug";
+    String message() default "Farbe ist nicht Bunt genug";
     Class<? extends Payload>[] payload() default { };
     Class<?>[] groups() default { };
 

@@ -28,7 +28,7 @@ public class BenutzerProfil {
     private String adresse;
     @Email
     private String email;
-    @Bunt @NotNull
+    @Bunt(message="{bunt.fehler}") @NotNull
     private String lieblingsfarbe;
     @NotNull @NotBlank
     private String interessen;
