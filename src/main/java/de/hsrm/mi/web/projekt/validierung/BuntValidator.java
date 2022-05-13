@@ -1,5 +1,8 @@
 package de.hsrm.mi.web.projekt.validierung;
 
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
 public class BuntValidator implements ConstraintValidator<Bunt, String>{
     
     //protected String color;
