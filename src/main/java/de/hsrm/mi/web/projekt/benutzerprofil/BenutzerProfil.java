@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -16,9 +17,21 @@ import de.hsrm.mi.web.projekt.validierung.Bunt;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Version;
 
 
+@Entity
 public class BenutzerProfil {
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Version
+    private long version;
+
     @Size(min=3, max=60) @NotNull @NotBlank
     private String name;
     @DateTimeFormat(iso = ISO.DATE)
@@ -91,10 +104,20 @@ public class BenutzerProfil {
         this.interessen = interessen;
     }
 
+
+    public long getId(){
+        return id;
+    }
+
+    public long getVersion(){
+        return version;
+    }
+
     @Override
     public String toString() {
         return "BenutzerProfil [adresse=" + adresse + ", email=" + email + ", geburtsdatum=" + geburtsdatum
-                + ", interessen=" + interessen + ", lieblingsfarbe=" + lieblingsfarbe + ", name=" + name + "]";
+                + ", interessen=" + interessen + ", lieblingsfarbe=" + lieblingsfarbe + ", name=" + name 
+                + ", id=" + id + ", version=" + version + "]";
     }
 
     @Override
