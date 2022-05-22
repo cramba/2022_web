@@ -4,6 +4,7 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 import javax.validation.Valid;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +21,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @RequestMapping("/")
 @SessionAttributes(names = {"profil"})
 public class BenutzerprofilController {
+    private BenutzerprofilServiceImpl benutzerprofilService;
     Validator vali;
     Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
+
+    @Autowired
+    public BenutzerprofilController(BenutzerprofilServiceImpl benutzerprofilService){
+        this.benutzerprofilService = benutzerprofilService;
+    }
     
 
     @ModelAttribute("profil")
@@ -66,7 +73,7 @@ public class BenutzerprofilController {
         if(result.hasErrors()){
             return "benutzerprofil/profileditor";
         }
-  
+        benutzerprofilService.speichereBenutzerProfil(profil);
         return "redirect:/benutzerprofil";
     }
 

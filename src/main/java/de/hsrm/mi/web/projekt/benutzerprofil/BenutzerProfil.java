@@ -104,7 +104,6 @@ public class BenutzerProfil {
         this.interessen = interessen;
     }
 
-
     public long getId(){
         return id;
     }
