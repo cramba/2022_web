@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benutzerprofil-Liste</title>
+
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 80%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+
+</head>
+<body>
+    <h1 th:text="#{profilliste.title}">Benutzerprofil-Liste</h1>
+    <a th:href="@{?sprache=de}">DE</a>
+    <a th:href="@{?sprache=en}">EN</a>
+
+    <table>
+        <tr>
+            <th th:text="#{profilliste.tab.name}">Name</th>
+            <th th:text="#{profilliste.tab.geburtsdatum}">Geb.</th>
+            <th th:text="#{profilliste.tab.email}">EPost</th>
+            <th th:text="#{profilliste.tab.adresse}">aus</th>
+            <th th:text="#{profilliste.tab.loeschen}">löschen</th>
+        </tr>
+        <tr>
+            <td>Person 1</td>
+            <td>2022</td>
+            <td>person@mail.com</td>
+            <td>Poppenhausen</td>
+            <td>Löschen</td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

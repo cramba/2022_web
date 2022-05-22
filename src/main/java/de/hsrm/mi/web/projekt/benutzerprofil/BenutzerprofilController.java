@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes(names = {"profil"})
 public class BenutzerprofilController {
     private BenutzerprofilServiceImpl benutzerprofilService;
+    
     Validator vali;
     Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
 
@@ -66,6 +67,11 @@ public class BenutzerprofilController {
     @GetMapping("/benutzerprofil/bearbeiten")
     public String bearbeiten_get(Model m){
         return "/benutzerprofil/profileditor";
+    }
+
+    @GetMapping("/benutzerprofil/liste")
+    public String liste_get(Model m){
+        return "/benutzerprofil/liste";
     }
 
     @PostMapping("/benutzerprofil/bearbeiten")  

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,12 +43,11 @@ public class BenutzerprofilServiceImpl implements BenutzerprofilService{
 
     @Override
     public List<BenutzerProfil> alleBenutzerProfile() {
-        List<BenutzerProfil> alleBenutzer;
-        for (BenutzerProfil bp: benutzerprofilRepository.findAll()){
-            
-        }
+        List<BenutzerProfil> alleBenutzer = benutzerprofilRepository.findAll(Sort.by("name"));
+        //alleBenutzer.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
+        
         // TODO Auto-generated method stub
-        return null;
+        return alleBenutzer;
     }
     
 }
