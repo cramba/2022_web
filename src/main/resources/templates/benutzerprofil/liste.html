@@ -40,12 +40,12 @@
         </tr>
         <tr th:if="${not #lists.isEmpty(profilliste)}" th:each="profilele: ${profilliste}">
             <!--<td><a  th:href="@{?op=bearbeiten&id=dieid}" th:text="${profil.name}">Person 1</a></td>-->
-            <td><a th:href="@{/benutzerprofil/liste(op=bearbeiten,id=${profil.id})}" th:text="${profilele.name}" th:id="${profil.id}">Löschen</a></td>
+            <td><a th:href="@{/benutzerprofil/liste(op=bearbeiten,id=${profilele.id})}" th:text="${profilele.name}" th:id="${profilele.id}">Löschen</a></td>
             <td th:text="${profilele.geburtsdatum}">2022</td>
             <td th:text="${profilele.email}">person@mail.com</td>
             <td th:text="${profilele.adresse}">Adresse</td>
             <!--<td><a th:href="@{?op=loeschen&id=${profil.name}}" th:text="#{profilliste.tab.loeschen}" th:id="${profil.id}">Löschen</a></td>-->
-            <td><a th:href="@{/benutzerprofil/liste(op=loeschen,id=${profil.id})}" th:text="#{profilliste.tab.loeschen}" th:id="${profil.id}">Löschen</a></td>
+            <td><a th:href="@{/benutzerprofil/liste(op=loeschen,id=${profilele.id})}" th:text="#{profilliste.tab.loeschen}" th:id="${profilele.id}">Löschen</a></td>
 
         </tr>
     </table>

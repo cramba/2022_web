@@ -86,6 +86,7 @@ public class BenutzerprofilController {
             BenutzerProfil test = benutzerprofilService.holeBenutzerProfilMitId(id).get();
             logger.info(test.toString());
             m.addAttribute("profil", benutzerprofilService.holeBenutzerProfilMitId(id).get());
+            System.out.println(id);
             return "redirect:/benutzerprofil/bearbeiten";
         }
 
