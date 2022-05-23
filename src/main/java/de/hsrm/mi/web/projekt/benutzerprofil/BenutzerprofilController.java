@@ -2,6 +2,8 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 
 import javax.validation.Valid;
+
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -22,7 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes(names = {"profil"})
 public class BenutzerprofilController {
     private BenutzerprofilServiceImpl benutzerprofilService;
-    
+
     Validator vali;
     Logger logger = LoggerFactory.getLogger(BenutzerprofilController.class);
 
@@ -68,18 +72,34 @@ public class BenutzerprofilController {
     public String bearbeiten_get(Model m){
         return "/benutzerprofil/profileditor";
     }
-
+  
     @GetMapping("/benutzerprofil/liste")
-    public String liste_get(Model m){
+    public String liste_get(Model m, @RequestParam(required = false) String op, @RequestParam(required=false) Long id){
+
+        //List<BenutzerProfil> profilliste = benutzerprofilService.alleBenutzerProfile();
+        m.addAttribute("profilliste", benutzerprofilService.alleBenutzerProfile());
+        //System.out.println(op);
+        if(op != null && op.equals("loeschen")){
+            benutzerprofilService.loescheBenutzerProfilMitId(id);
+            return "redirect:/benutzerprofil/liste";
+        }else if(op != null && op.equals("bearbeiten")){
+            BenutzerProfil test = benutzerprofilService.holeBenutzerProfilMitId(id).get();
+            logger.info(test.toString());
+            m.addAttribute("profil", benutzerprofilService.holeBenutzerProfilMitId(id).get());
+            return "redirect:/benutzerprofil/bearbeiten";
+        }
+
         return "/benutzerprofil/liste";
     }
 
+
     @PostMapping("/benutzerprofil/bearbeiten")  
-    public String postForm(@Valid @ModelAttribute("profil") BenutzerProfil profil, BindingResult result){
+    public String postForm(@Valid @ModelAttribute("profil") BenutzerProfil profil, BindingResult result, Model m){
         if(result.hasErrors()){
             return "benutzerprofil/profileditor";
         }
-        benutzerprofilService.speichereBenutzerProfil(profil);
+        profil = benutzerprofilService.speichereBenutzerProfil(profil);
+        m.addAttribute("profil", profil);
         return "redirect:/benutzerprofil";
     }
 

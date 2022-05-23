@@ -44,7 +44,7 @@ public class BenutzerprofilServiceImpl implements BenutzerprofilService{
     @Override
     public List<BenutzerProfil> alleBenutzerProfile() {
         List<BenutzerProfil> alleBenutzer = benutzerprofilRepository.findAll(Sort.by("name"));
-        //alleBenutzer.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
+        alleBenutzer.sort((p1, p2) -> p1.getName().compareTo(p2.getName()));
         
         // TODO Auto-generated method stub
         return alleBenutzer;
