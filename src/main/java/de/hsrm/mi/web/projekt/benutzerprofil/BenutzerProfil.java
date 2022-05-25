@@ -46,6 +46,10 @@ public class BenutzerProfil {
     @NotNull @NotBlank
     private String interessen;
 
+    private double lan;
+    private double lon;
+
+
     @Valid
     public BenutzerProfil(){
         name = "Marc";
@@ -112,11 +116,27 @@ public class BenutzerProfil {
         return version;
     }
 
+    public double getLan() {
+        return lan;
+    }
+
+    public void setLan(double lan) {
+        this.lan = lan;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
     @Override
     public String toString() {
         return "BenutzerProfil [adresse=" + adresse + ", email=" + email + ", geburtsdatum=" + geburtsdatum
                 + ", interessen=" + interessen + ", lieblingsfarbe=" + lieblingsfarbe + ", name=" + name 
-                + ", id=" + id + ", version=" + version + "]";
+                + ", id=" + id + ", version=" + version + ", lan="+ lan + ", lon" + lon + "]";
     }
 
     @Override
