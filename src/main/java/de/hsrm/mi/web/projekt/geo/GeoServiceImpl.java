@@ -2,19 +2,47 @@ package de.hsrm.mi.web.projekt.geo;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class GeoServiceImpl implements GeoService{
 
-WebClient webClient = WebClient.create("https://nominatim. openstreetmap.org");
+
+
+    //ich gebe die String Adresse mit, die Methode liefert Liste mit record AdressInfo Zurück
     @Override
     public List<AdressInfo> findeAdressInfo(String adresse) {
         if(adresse == null || adresse == ""){
             return null;
         }
+        //hässliche Lösung zum erstellen der URL (aber funktioniert)
+        String[] adressSeperated = adresse.split(" ");
+    	StringBuilder url = new StringBuilder();
+    	url.append("https://nominatim.openstreetmap.org/search?q=");
+        int i = 0;
+    	for (String element : adressSeperated) {
+    		if(i++ == adressSeperated.length - 1) {
+    			url.append(element);
+    		}else {
+    			url.append(element + "+");
+    		}
+    		
+    	}
+    	url.append("&format=json");
+    	String finalUrl = url.toString();
+
+        //WebClient client = WebClient.create("https://nominatim.openstreetmap.org/search?<params>");
+        WebClient client = WebClient.create(finalUrl);
+
+        List<AdressInfo> adressInfos = client.get()
+        .retrieve()
+        .bodyToFlux(AdressInfo.class)
+        .collectList()
+        .block();
         // TODO Auto-generated method stub
-        return null;
+        return adressInfos;
     }
 
     @Override

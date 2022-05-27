@@ -7,14 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import de.hsrm.mi.web.projekt.geo.AdressInfo;
+import de.hsrm.mi.web.projekt.geo.GeoServiceImpl;
+
 @Service
 public class BenutzerprofilServiceImpl implements BenutzerprofilService{
 
     private final BenutzerprofilRepository benutzerprofilRepository;
+    private final GeoServiceImpl geoService;
 
     @Autowired
-    public BenutzerprofilServiceImpl(BenutzerprofilRepository benutzerRepository) {
+    public BenutzerprofilServiceImpl(BenutzerprofilRepository benutzerRepository, GeoServiceImpl geoService) {
         this.benutzerprofilRepository = benutzerRepository;
+        this.geoService = geoService;
     }
 
     @Override
@@ -22,6 +27,15 @@ public class BenutzerprofilServiceImpl implements BenutzerprofilService{
         // das übergebene bp im Respository abspeichern
         //durch Speicheraktion entstandene Entity zurückgeben
         //bp = benutzerprofilRepository.save(bp);
+        List<AdressInfo> adressInfos = geoService.findeAdressInfo(bp.getAdresse());
+        if(adressInfos.isEmpty()){
+            bp.setLat(0);
+            bp.setLon(0);
+        }else {
+            AdressInfo chosenAdress = adressInfos.get(0);
+            bp.setLat(chosenAdress.lat());
+            bp.setLon(chosenAdress.lon());
+        }
         return benutzerprofilRepository.save(bp);
     }
 

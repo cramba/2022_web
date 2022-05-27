@@ -46,7 +46,7 @@ public class BenutzerProfil {
     @NotNull @NotBlank
     private String interessen;
 
-    private double lan;
+    private double lat;
     private double lon;
 
 
@@ -116,12 +116,12 @@ public class BenutzerProfil {
         return version;
     }
 
-    public double getLan() {
-        return lan;
+    public double getLat() {
+        return lat;
     }
 
-    public void setLan(double lan) {
-        this.lan = lan;
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
     public double getLon() {
@@ -136,7 +136,7 @@ public class BenutzerProfil {
     public String toString() {
         return "BenutzerProfil [adresse=" + adresse + ", email=" + email + ", geburtsdatum=" + geburtsdatum
                 + ", interessen=" + interessen + ", lieblingsfarbe=" + lieblingsfarbe + ", name=" + name 
-                + ", id=" + id + ", version=" + version + ", lan="+ lan + ", lon" + lon + "]";
+                + ", id=" + id + ", version=" + version + ", lat="+ lat + ", lon" + lon + "]";
     }
 
     @Override
