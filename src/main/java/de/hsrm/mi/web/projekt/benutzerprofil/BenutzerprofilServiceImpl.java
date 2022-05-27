@@ -28,13 +28,13 @@ public class BenutzerprofilServiceImpl implements BenutzerprofilService{
         //durch Speicheraktion entstandene Entity zurückgeben
         //bp = benutzerprofilRepository.save(bp);
         List<AdressInfo> adressInfos = geoService.findeAdressInfo(bp.getAdresse());
-        if(adressInfos.isEmpty()){
-            bp.setLat(0);
-            bp.setLon(0);
-        }else {
+        if(adressInfos != null && !adressInfos.isEmpty()){
             AdressInfo chosenAdress = adressInfos.get(0);
             bp.setLat(chosenAdress.lat());
             bp.setLon(chosenAdress.lon());
+        }else {
+            bp.setLat(0);
+            bp.setLon(0);
         }
         return benutzerprofilRepository.save(bp);
     }

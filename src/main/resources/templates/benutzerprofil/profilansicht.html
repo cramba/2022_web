@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benutzerprofil</title>
+
 </head>
 <body>
     <h1 th:text="#{profilansicht.title}">Benutzerprofil</h1>
@@ -39,7 +40,7 @@
     </ol>
 
     <button onclick="window.location.href='/benutzerprofil/bearbeiten'" th:text="#{profil.bearbeiten}">Bearbeiten</button>
-    
+    <a type="button" href="https://www.openstreetmap.org/#map=17/lat/lon" target="_blank" th:text="#{profil.meinstandort}" class="button"></a>
     <button onclick="window.location.href='/benutzerprofil/liste'" th:text="#{profilliste.title}">Liste</button>
 
 
