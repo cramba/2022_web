@@ -5,10 +5,13 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 
 @Entity
 public class Angebot {
@@ -27,6 +30,9 @@ public class Angebot {
     private String abholort;
     private double lat;
     private double lon;
+
+    @ManyToOne
+    private BenutzerProfil anbieter;
 
     public Angebot(){
         beschreibung = "";
@@ -89,6 +95,14 @@ public class Angebot {
 
     public long getVersion(){
         return version;
+    }
+
+    public BenutzerProfil getAnbieter(){
+        return anbieter;
+    }
+
+    public void setAnbieter(BenutzerProfil anbieter){
+        this.anbieter = anbieter;
     }
 
     @Override

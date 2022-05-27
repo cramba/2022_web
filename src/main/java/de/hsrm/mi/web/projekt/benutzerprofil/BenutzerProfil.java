@@ -3,6 +3,7 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -12,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
+
+import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 
@@ -48,6 +52,9 @@ public class BenutzerProfil {
 
     private double lat;
     private double lon;
+
+    @OneToMany(mappedBy = "anbieter")
+    private List<Angebot> angebote = new ArrayList<Angebot>();
 
 
     @Valid
@@ -130,6 +137,10 @@ public class BenutzerProfil {
 
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public List<Angebot> getAngebote(){
+        return angebote;
     }
 
     @Override
