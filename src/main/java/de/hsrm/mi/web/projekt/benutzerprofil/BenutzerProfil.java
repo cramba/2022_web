@@ -19,8 +19,10 @@ import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -53,7 +55,7 @@ public class BenutzerProfil {
     private double lat;
     private double lon;
 
-    @OneToMany(mappedBy = "anbieter")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "anbieter") 
     private List<Angebot> angebote = new ArrayList<Angebot>();
 
 

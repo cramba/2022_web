@@ -3,7 +3,6 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import javax.validation.Valid;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import de.hsrm.mi.web.projekt.angebot.Angebot;
 
 @Controller
 @RequestMapping("/")
@@ -86,11 +87,17 @@ public class BenutzerprofilController {
             BenutzerProfil test = benutzerprofilService.holeBenutzerProfilMitId(id).get();
             logger.info(test.toString());
             m.addAttribute("profil", benutzerprofilService.holeBenutzerProfilMitId(id).get());
-            System.out.println(id);
             return "redirect:/benutzerprofil/bearbeiten";
         }
 
         return "/benutzerprofil/liste";
+    }
+
+    @GetMapping("/benutzerprofil/angebot")
+    public String angebot_get(Model m){
+        Angebot angebot = new  Angebot();
+        m.addAttribute("angebot", angebot);
+        return "/benutzerprofil/angebotsformular";
     }
 
 
@@ -101,6 +108,23 @@ public class BenutzerprofilController {
         }
         profil = benutzerprofilService.speichereBenutzerProfil(profil);
         m.addAttribute("profil", profil);
+        return "redirect:/benutzerprofil";
+    }
+
+    @PostMapping("/benutzerprofil/angebot")
+    public String postAngebot(@ModelAttribute("angebot") Angebot angebot, Model m){
+        BenutzerProfil profil = (BenutzerProfil) m.getAttribute("profil");
+        benutzerprofilService.fuegeAngebotHinzu(profil.getId(), angebot);
+        //m.addAttribute("profil", profil);
+        m.addAttribute("profil", benutzerprofilService.holeBenutzerProfilMitId(profil.getId()).get());
+        return "redirect:/benutzerprofil";
+    }
+
+    @GetMapping("/benutzerprofil/angebot/{id}/del")
+    public String deleteAngebot_get(Model m, @PathVariable("id") Long id){
+        BenutzerProfil profil = (BenutzerProfil) m.getAttribute("profil");
+        benutzerprofilService.loescheAngebot(id);
+        m.addAttribute("profil", benutzerprofilService.holeBenutzerProfilMitId(profil.getId()).get());
         return "redirect:/benutzerprofil";
     }
 

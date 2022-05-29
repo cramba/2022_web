@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .fehler{
+            border: 2px solid red;
+        }
+    </style>
+    <title>Angebot</title>
+</head>
+<body>
+    <h1 th:text="#{angebot.editor.title}">Neues Angebot</h1>
+    <a th:href="@{?sprache=de}">DE</a>
+    <a th:href="@{?sprache=en}">EN</a>
+
+    <form th:action="@{/benutzerprofil/angebot}" th:method="POST" th:object="${angebot}">
+        <label for="beschreibung"><b th:text="#{angebot.editor.beschreibung}">Beschreibung:</b></label><br>
+        <input type="text" id="beschreibung" name="beschreibung" th:field="*{beschreibung}"></input><br><br>
+
+        <label for="mindestpreis"><b th:text="#{angebot.editor.mindestpreis}">Mindestpreis:</b></label><br>
+        <input type="number" id="mindestpreis" name="mindestpreis" th:field="*{mindestpreis}"></input><br><br>
+
+        <label for="ablaufzeitpunkt"><b th:text="#{angebot.editor.ablaufzeitpunkt}">Angebotsende:</b></label><br>
+        <input type="datetime-local" id="ablaufzeitpunkt" name="ablaufzeitpunkt" th:field="*{ablaufzeitpunkt}"></input><br><br>
+
+        <label for="abholort"><b th:text="#{angebot.editor.abholort}">Abholort:</b></label><br>
+        <input type="text" id="abholort" name="abholort" th:field="*{abholort}"></input><br><br>
+
+        <input type="submit" name="abschicken" th:value="#{angebot.editor.speichern}"/>
+        <button onclick="window.location.href='/benutzerprofil'" th:text="#{profil.abbrechen}" type="reset">Zurück</button>
+    </form>
+</body>
+</html>

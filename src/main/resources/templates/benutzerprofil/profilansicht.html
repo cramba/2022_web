@@ -6,6 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Benutzerprofil</title>
 
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 80%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+
 </head>
 <body>
     <h1 th:text="#{profilansicht.title}">Benutzerprofil</h1>
@@ -43,6 +61,23 @@
     <a th:if="${profil.lat} != 0" type="button" th:href="@{'https://www.openstreetmap.org/#map=17/'+ ${profil.lat}+'/'+${profil.lon}}" target="_blank" th:text="#{profil.meinstandort}" class="button"></a>
     <button onclick="window.location.href='/benutzerprofil/liste'" th:text="#{profilliste.title}">Liste</button>
 
+    <h2 th:if="${profil.id ne 0}" th:text="#{angebotsliste.titel}">Ihre Angebote</h2>
+    <table th:if="${profil.id ne 0}">
+        <tr>
+            <th th:text="#{angebot.editor.beschreibung}">Beschreibung</th>
+            <th th:text="#{angebot.editor.mindestpreis}">Mindestpreis</th>
+            <th th:text="#{angebot.editor.ablaufzeitpunkt}">Angebotsende</th>
+            <th th:text="#{angebotsliste.loeschen}">Löschen</th>
+        </tr>
+        <tr th:each="angebot: ${profil.angebote}">
+            <td><a th:href="@{'https://www.openstreetmap.org/#map=17/'+ ${angebot.lat}+'/'+${angebot.lon}}" target="_blank" th:text="${angebot.beschreibung}"></a></td>
+            <td th:text="${angebot.mindestpreis}"></td>
+            <td th:text="${angebot.ablaufzeitpunkt}"></td>
+            <td><a th:href="@{'/benutzerprofil/angebot/'+${angebot.id}+'/del'}" th:text="#{angebotsliste.loeschen}" th:id="${angebot.id}">Löschen</a></td>
+        </tr>
+    </table>
+
+    <button th:if="${profil.id ne 0}" onclick="window.location.href='/benutzerprofil/angebot'" th:text="#{profil.angebote.anlegen}">Neues Angebot</button>
 
 </body>
 </html>

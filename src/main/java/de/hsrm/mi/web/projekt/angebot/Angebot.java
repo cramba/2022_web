@@ -57,6 +57,10 @@ public class Angebot {
         this.mindestpreis = mindestpreis;
     }
 
+    public void setMindestpreis(int mindestpreis) {
+        this.mindestpreis = (long) mindestpreis;
+    }
+
     public LocalDateTime getAblaufzeitpunkt() {
         return ablaufzeitpunkt;
     }
