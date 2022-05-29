@@ -107,7 +107,9 @@ public class BenutzerprofilController {
             return "benutzerprofil/profileditor";
         }
         profil = benutzerprofilService.speichereBenutzerProfil(profil);
-        m.addAttribute("profil", profil);
+        m.addAttribute("profil", benutzerprofilService.holeBenutzerProfilMitId(profil.getId()).get());
+        //HIER
+        //m.addAttribute("profil", profil);
         return "redirect:/benutzerprofil";
     }
 
