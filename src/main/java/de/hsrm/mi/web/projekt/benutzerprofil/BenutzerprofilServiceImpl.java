@@ -119,5 +119,17 @@ public class BenutzerprofilServiceImpl implements BenutzerprofilService{
         //2. Das Angebot aus dem Repository löschen
 		angebotRepository.deleteById(id);
 	}
+
+    @Override
+    public List<Angebot> alleAngebote() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Optional<Angebot> findeAngebotMitId(long angebotid) {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }

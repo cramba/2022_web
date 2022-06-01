@@ -3,7 +3,6 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -15,11 +14,11 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
+import de.hsrm.mi.web.projekt.gebot.Gebot;
 import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -56,8 +55,11 @@ public class BenutzerProfil {
     private double lat;
     private double lon;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "anbieter", cascade = CascadeType.ALL) 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "anbieter", cascade = CascadeType.PERSIST) 
     private List<Angebot> angebote = new ArrayList<Angebot>();
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gebieter", cascade = CascadeType.PERSIST)
+    private List<Gebot> gebote = new ArrayList<Gebot>();
 
 
     @Valid
@@ -68,6 +70,10 @@ public class BenutzerProfil {
         email = null;
         lieblingsfarbe = "";
         interessen = "";
+    }
+
+    public List<Gebot> getGebote() {
+        return gebote;
     }
 
     public String getName() {
