@@ -55,10 +55,10 @@ public class BenutzerProfil {
     private double lat;
     private double lon;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "anbieter", cascade = CascadeType.PERSIST) 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "anbieter", cascade = CascadeType.PERSIST, orphanRemoval = true) 
     private List<Angebot> angebote = new ArrayList<Angebot>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gebieter", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gebieter", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Gebot> gebote = new ArrayList<Gebot>();
 
 

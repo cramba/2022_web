@@ -61,11 +61,6 @@ public class BenutzerprofilServiceImpl implements BenutzerprofilService{
     @Override
     public void loescheBenutzerProfilMitId(Long loesch) {
         // TODO Auto-generated method stub
-        //alle Angebote des Nutzers löschen
-        BenutzerProfil bp = benutzerprofilRepository.findById(loesch).get();
-        for(Angebot angebot : bp.getAngebote()){
-            angebotRepository.deleteById(angebot.getId());
-        }
         benutzerprofilRepository.deleteById(loesch);
     }
 
@@ -123,13 +118,13 @@ public class BenutzerprofilServiceImpl implements BenutzerprofilService{
     @Override
     public List<Angebot> alleAngebote() {
         // TODO Auto-generated method stub
-        return null;
+        return angebotRepository.findAll();
     }
 
     @Override
     public Optional<Angebot> findeAngebotMitId(long angebotid) {
         // TODO Auto-generated method stub
-        return null;
+        return angebotRepository.findById(angebotid);
     }
     
 }
