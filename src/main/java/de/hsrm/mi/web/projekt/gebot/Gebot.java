@@ -48,6 +48,7 @@ public class Gebot {
 
     @ManyToOne
     private Angebot angebot;
+    
     private long betrag;
     private LocalDateTime gebotszeitpunkt;
 

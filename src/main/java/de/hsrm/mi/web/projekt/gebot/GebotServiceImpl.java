@@ -1,6 +1,8 @@
 package de.hsrm.mi.web.projekt.gebot;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,12 +39,28 @@ public class GebotServiceImpl implements GebotService {
     @Override
     public Gebot bieteFuerAngebot(long benutzerprofilid, long angebotid, long betrag) {
         // TODO Auto-generated method stub
-        return null;
+        Optional<Gebot> gebotVorhanden = gebotRepository.findByAngebotIdAndBieterId(angebotid, benutzerprofilid);
+        if(gebotVorhanden.isPresent()){
+            Gebot gebot = gebotVorhanden.get();
+            gebot.setBetrag(betrag);
+            gebot.setGebotszeitpunkt(LocalDateTime.now());
+            //return gebot;
+            return gebotRepository.save(gebot);
+        }else {
+            Gebot neuesGebot = new Gebot();
+            neuesGebot.setBetrag(betrag);
+            neuesGebot.setGebieter(benutzerprofilService.holeBenutzerProfilMitId(benutzerprofilid).get());
+            neuesGebot.setAngebot(benutzerprofilService.findeAngebotMitId(angebotid).get());
+            benutzerprofilService.findeAngebotMitId(angebotid).get().getGebote().add(neuesGebot);
+            benutzerprofilService.holeBenutzerProfilMitId(benutzerprofilid).get().getGebote().add(neuesGebot);
+            return gebotRepository.save(neuesGebot);
+        }
     }
 
     @Override
     public void loescheGebot(long gebotid) {
         // TODO Auto-generated method stub
+        gebotRepository.deleteById(gebotid);
         
     }
     
