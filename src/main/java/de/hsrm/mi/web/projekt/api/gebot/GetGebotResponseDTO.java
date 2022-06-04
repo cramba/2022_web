@@ -12,7 +12,14 @@ public record GetGebotResponseDTO(
         LocalDateTime gebotzeitpunkt) {
                 
                 public static GetGebotResponseDTO from(Gebot g){
-                        return GetGebotResponseDTO.from(g);
+                        GetGebotResponseDTO dto = new GetGebotResponseDTO(
+                                g.getId(), 
+                                g.getGebieter().getId(), 
+                                g.getGebieter().getName(), 
+                                g.getAngebot().getId(), 
+                                g.getAngebot().getBeschreibung(), g.getBetrag(), 
+                                g.getGebotszeitpunkt());
+                        return dto;
                 }
 
 }
