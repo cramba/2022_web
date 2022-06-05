@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import de.hsrm.mi.web.projekt.angebot.Angebot;
+import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerprofilService;
 
 
@@ -60,6 +62,15 @@ public class GebotServiceImpl implements GebotService {
     @Override
     public void loescheGebot(long gebotid) {
         // TODO Auto-generated method stub
+        //aus benutzerprofil löschen
+        BenutzerProfil gebieter = gebotRepository.getById(gebotid).getGebieter();
+        gebieter.getGebote().remove(gebotRepository.getById(gebotid));
+
+        //aus Angebot löschen
+        Angebot angebot = gebotRepository.getById(gebotid).getAngebot();
+        angebot.getGebote().remove(gebotRepository.getById(gebotid));
+        
+        //aus Repository löschen
         gebotRepository.deleteById(gebotid);
         
     }

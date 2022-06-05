@@ -12,7 +12,7 @@ import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 
 @Entity
-public class Gebot {
+public class Gebot{
 
     @Id
     @GeneratedValue
