@@ -40,7 +40,7 @@ public class Angebot {
     @ManyToOne
     private BenutzerProfil anbieter;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "angebot", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "angebot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gebot> gebote = new ArrayList<Gebot>();
 
     public Angebot(){

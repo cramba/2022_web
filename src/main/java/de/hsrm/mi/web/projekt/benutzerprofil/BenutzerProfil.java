@@ -58,7 +58,7 @@ public class BenutzerProfil {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "anbieter", cascade = CascadeType.PERSIST, orphanRemoval = true) 
     private List<Angebot> angebote = new ArrayList<Angebot>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gebieter", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gebieter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Gebot> gebote = new ArrayList<Gebot>();
 
 
