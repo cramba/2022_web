@@ -6,7 +6,7 @@ import GeoLink from './components/GeoLink.vue'
 
 <template>
   <header>
-    <GeoLink :lat="52.9849" :lon="9.5794">Visselhövede</GeoLink>
+    
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">

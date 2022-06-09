@@ -18,7 +18,7 @@ export interface IAngebotListeItem {
 // 
 export class AngebotListeDing implements IAngebotListeItem {
     angebotid = 0;
-    beschreibung = "";
+    beschreibung = "TEST";
     anbieterid = 0;
     anbietername = "";
     mindestpreis = 0;
