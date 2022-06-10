@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import GeoLink from '@/components/GeoLink.vue'
 import AngebotListeItem from '../components/AngebotListeItem.vue'
-import type { IAngebotListeItem } from '@/services/IAngebotListeItem';
-let a : IAngebotListeItem;
+import type { IAngebotListeItem } from '@/services/IAngebotListeItem'
+import { useFakeAngebot } from '@/services/useFakeAngebot'
+
+let a : IAngebotListeItem
+a = useFakeAngebot().angebote.value[0]
 </script>
 
 <template>

@@ -3,9 +3,9 @@ import type { IAngebotListeItem } from '@/services/IAngebotListeItem';
 import {ref} from "vue"
 
 const props = defineProps<{
-  //angebot :  IAngebotListeItem
+  angebot :  IAngebotListeItem
 }>()
-
+let beschreibung = props.angebot.beschreibung
 //let beschreibung = props.angebot.beschreibung;
 let showTable = ref(false);
 function toggleTable(){
@@ -17,7 +17,7 @@ function toggleTable(){
 }
 
 </script>
-
+<h1>{{beschreibung}}</h1>
 <template>
     <table>
         <thead>
