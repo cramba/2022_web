@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import GeoLink from '@/components/GeoLink.vue'
 import AngebotListeItem from '../components/AngebotListeItem.vue'
 import type { IAngebotListeItem } from '@/services/IAngebotListeItem'
 import { useFakeAngebot} from '@/services/useFakeAngebot'
+import AngebotListe from '../components/AngebotListe.vue'
 
-let a : IAngebotListeItem
-a = useFakeAngebot().angebote.value[0]
+//let a : IAngebotListeItem
+//a = useFakeAngebot().angebote.value[0]
 </script>
 
 <template>
   <div>
     
-    <GeoLink :lat="52.9849" :lon="9.5794">Visselhövede</GeoLink>
-    <br/><br/>
-    <AngebotListeItem :angebot="a" />
+
+    <!--<AngebotListeItem :angebot="a" />-->
+    <AngebotListe></AngebotListe>
     <button @click="useFakeAngebot().bietenSimulieren()">Fake Bieten</button>
     
   </div>
