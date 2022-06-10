@@ -2,7 +2,7 @@
 import GeoLink from '@/components/GeoLink.vue'
 import AngebotListeItem from '../components/AngebotListeItem.vue'
 import type { IAngebotListeItem } from '@/services/IAngebotListeItem'
-import { useFakeAngebot } from '@/services/useFakeAngebot'
+import { useFakeAngebot} from '@/services/useFakeAngebot'
 
 let a : IAngebotListeItem
 a = useFakeAngebot().angebote.value[0]
@@ -14,6 +14,7 @@ a = useFakeAngebot().angebote.value[0]
     <GeoLink :lat="52.9849" :lon="9.5794">Visselhövede</GeoLink>
     <br/><br/>
     <AngebotListeItem :angebot="a" />
+    <button @click="useFakeAngebot().bietenSimulieren()">Fake Bieten</button>
     
   </div>
 </template>
