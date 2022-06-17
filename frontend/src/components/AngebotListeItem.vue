@@ -21,7 +21,7 @@ function toggleTable(){
 </script>
 
 <template>
-    <table>
+    <table class="steelBlueColors">
         <thead>
             <th style="width:40%">{{props.angebot.beschreibung}}</th>
             <th style="width:20%">{{props.angebot.gebote}} Gebote</th>
