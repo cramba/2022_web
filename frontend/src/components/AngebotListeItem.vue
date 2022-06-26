@@ -33,7 +33,7 @@ function toggleTable(){
             <tr>Letztes Gebot   {{props.angebot.topgebot}}EUR (Mindespreis war {{props.angebot.mindestpreis}}EUR)</tr>
             <tr>Abholort <GeoLink :lat="props.angebot.lat" :lon="props.angebot.lon">{{props.angebot.abholort}}</GeoLink></tr>
             <tr>bei {{props.angebot.anbietername}}</tr>
-            <tr>bis {{props.angebot.ablaufzeitpunkt.toLocaleDateString()}} um {{props.angebot.ablaufzeitpunkt.toLocaleTimeString()}} Uhr</tr>
+            <tr>bis {{props.angebot.ablaufzeitpunkt}}</tr>
         </tbody>
     </table>
 </template>

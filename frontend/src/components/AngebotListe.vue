@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import AngebotListeItem from '@/components/AngebotListeItem.vue'
+import { useAngebot } from '@/services/useAngebot';
 import { useFakeAngebot } from '@/services/useFakeAngebot'
 import { ref, computed } from 'vue'
-let angebotliste = useFakeAngebot().angebote
+const {angebotliste} = useAngebot().angebote
+
 
 const suchfeld = ref("")
 
@@ -13,15 +15,15 @@ function clearSuchfeld(){
 const angebotefiltered = computed(() => {
     const n: number = suchfeld.value.length;
     if(suchfeld.value.length < 3) {
-        return angebotliste.value
+        return angebotliste
     } else {
-        return angebotliste.value.filter(e =>
+        return angebotliste.filter(e =>
             e.beschreibung.toLowerCase().includes(suchfeld.value.toLocaleLowerCase())||
             e.abholort.toLowerCase().includes(suchfeld.value.toLocaleLowerCase())||
             e.anbietername.toLowerCase().includes(suchfeld.value.toLocaleLowerCase())
                 );
     }
-});
+})
 </script>
 
 <template>
