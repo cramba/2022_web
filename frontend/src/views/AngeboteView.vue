@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useAngebot, updateAngebote } from '@/services/useAngebot';
+import { useAngebot, updateAngebote, receiveAngebotMessages } from '@/services/useAngebot';
 
 import AngebotListe from '../components/AngebotListe.vue'
 
 const {angebote} = useAngebot()
+receiveAngebotMessages()
 const errorMessage = angebote.errormessage
 let anzAngebote = angebote.angebotliste.length
 </script>
