@@ -3,6 +3,7 @@ package de.hsrm.mi.web.projekt.benutzerprofil;
 
 import javax.validation.Valid;
 
+import java.security.Principal;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
 import de.hsrm.mi.web.projekt.messaging.BackendInfoMessage.BackendOperation;
+import de.hsrm.mi.web.projekt.projektuser.ProjektUserServiceImpl;
 
 @Controller
 @RequestMapping("/")
@@ -40,13 +42,20 @@ public class BenutzerprofilController {
 
     @Autowired
     BackendInfoServiceImpl backendInfoServiceImpl;
+
+    @Autowired
+    ProjektUserServiceImpl projektUserService;
     
 
     @ModelAttribute("profil")
-    public void initProfil(Locale locale, Model m){
+    public void initProfil(Locale locale, Model m, Principal prinz){
         BenutzerProfil profil = new  BenutzerProfil();
-        m.addAttribute("profil", profil);
+        //m.addAttribute("profil", profil);
         m.addAttribute("sprache", locale.getDisplayLanguage());
+        if(prinz != null){
+            profil = projektUserService.findeBenutzer(prinz.getName()).getBenutzerprofil();
+        }
+        m.addAttribute("profil", profil);
 
         /*
         BenutzerProfil profil = new  BenutzerProfil();

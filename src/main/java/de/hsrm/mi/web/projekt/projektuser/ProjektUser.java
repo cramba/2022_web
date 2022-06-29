@@ -2,8 +2,11 @@ package de.hsrm.mi.web.projekt.projektuser;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 
 @Entity
 public class ProjektUser {
@@ -13,6 +16,9 @@ public class ProjektUser {
 
     @NotBlank @Size(min=3) 
     private String password;
+
+    @OneToOne
+    private BenutzerProfil benutzerprofil;
 
     private String role;
     
@@ -42,6 +48,14 @@ public class ProjektUser {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public BenutzerProfil getBenutzerprofil() {
+        return benutzerprofil;
+    }
+
+    public void setBenutzerprofil(BenutzerProfil benutzerprofil) {
+        this.benutzerprofil = benutzerprofil;
     }
 
     @Override

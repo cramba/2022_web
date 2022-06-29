@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.gebot.Gebot;
+import de.hsrm.mi.web.projekt.projektuser.ProjektUser;
 import de.hsrm.mi.web.projekt.validierung.Bunt;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +27,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 
 
@@ -43,13 +45,13 @@ public class BenutzerProfil {
     @DateTimeFormat(iso = ISO.DATE)
     @PastOrPresent @NotNull
     private LocalDate geburtsdatum;
-    @NotBlank
+
     private String adresse;
     @Email
     private String email;
     @Bunt(message="{bunt.fehler}") @NotNull
     private String lieblingsfarbe;
-    @NotNull @NotBlank
+    @NotNull 
     private String interessen;
 
     private double lat;
@@ -58,9 +60,11 @@ public class BenutzerProfil {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "anbieter", cascade = CascadeType.PERSIST, orphanRemoval = true) 
     private List<Angebot> angebote = new ArrayList<Angebot>();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "gebieter", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "gebieter") //, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER, 
     private List<Gebot> gebote = new ArrayList<Gebot>();
 
+    @OneToOne(mappedBy = "benutzerprofil", cascade = CascadeType.REMOVE)
+    private ProjektUser projektUser;
 
     @Valid
     public BenutzerProfil(){
@@ -150,6 +154,14 @@ public class BenutzerProfil {
 
     public List<Angebot> getAngebote(){
         return angebote;
+    }
+
+    public ProjektUser getProjektUser() {
+        return projektUser;
+    }
+
+    public void setProjektUser(ProjektUser projektUser) {
+        this.projektUser = projektUser;
     }
 
     @Override
