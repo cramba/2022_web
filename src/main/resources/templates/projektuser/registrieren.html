@@ -16,13 +16,13 @@
     <a th:href="@{?sprache=de}">DE</a>
     <a th:href="@{?sprache=en}">EN</a>
     <h2 th:text="#{registeruser.ihredaten}">Ihre Registrierung</h2>
-    <form th:action="@{projektuser/registrieren}" th:method="POST" th:object="${profilUser}">
-        <label for="loginName"><b th:text="#{projektuser.username}">Ihr gewählter Login-Name:</b></label><br>
-        <input type="text" id="loginName" name="loginName" th:field="*{loginName}" th:errorclass="fehler"></input><br>
-        <label th:if="${#fields.hasErrors('loginName')}" th:errors="*{loginName}"></label><br><br>
+    <form th:action="@{/registrieren}" th:method="POST" th:object="${projektUser}">
+        <label for="username"><b th:text="#{registeruser.username}">Ihr gewählter Login-Name:</b></label><br>
+        <input type="text" id="username" name="username" th:field="*{username}" th:errorclass="fehler"></input><br>
+        <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label><br><br>
 
         <label for="password"><b th:text="#{registeruser.password}">Losung:</b></label><br>
-        <input type="text" id="password" name="password" th:field="*{password}" th:errorclass="fehler"></input><br>
+        <input type="password" id="password" name="password" th:field="*{password}" th:errorclass="fehler"></input><br>
         <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label><br><br>
 
         <input type="submit" name="abschicken" th:value="#{registeruser.speichern}"/>

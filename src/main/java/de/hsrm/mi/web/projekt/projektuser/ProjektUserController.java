@@ -11,30 +11,30 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Locale;
+
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes(names = {"projektUser"})
 public class ProjektUserController {
 
-    private ProjektUserServiceImpl userService;
+    @Autowired 
+    ProjektUserServiceImpl userService;
 
     Logger logger = LoggerFactory.getLogger(ProjektUserController.class);
 
-    @Autowired
-    public ProjektUserController(ProjektUserServiceImpl userService){
-        this.userService = userService;
-    }
+    
 
     @ModelAttribute("projektUser")
-    public void initProfil(Locale locale, Model m){
+    public void initProfil(Model m){
         ProjektUser projektUser = new ProjektUser();
         m.addAttribute("projektUser", projektUser);
-        m.addAttribute("sprache", locale.getDisplayLanguage());
     }
 
     @GetMapping("/registrieren")
@@ -42,12 +42,15 @@ public class ProjektUserController {
         return "/projektuser/registrieren";
     }
 
-    @PostMapping("projektuser/registrieren")
-    public String postRegistrierung(@Valid, @ModelAttribute("projektUser") ProjektUser user, BindingResult result, Model m){
+    @PostMapping("/registrieren")
+    public String postRegistrierung(@Valid @ModelAttribute("projektUser") ProjektUser user, BindingResult result, Model m){
         if(result.hasErrors()){
-            return "projektuser/registrieren"
+            return "projektuser/registrieren";
         }
-    }
+        userService.neuenBenutzerAnlegen(user.getUsername(), user.getPassword(), user.getRole());
+        //m.addAttribute("projektUser", user);
+        return "redirect:/benutzerprofil";
+    }          
     
     
 }

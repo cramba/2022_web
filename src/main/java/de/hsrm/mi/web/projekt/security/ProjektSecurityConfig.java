@@ -1,5 +1,6 @@
 package de.hsrm.mi.web.projekt.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,9 +17,16 @@ public class ProjektSecurityConfig extends WebSecurityConfigurerAdapter{
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    @Autowired
+    private ProjektUserDetailsService userDetailService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder authmanagerbuilder) throws Exception {
         PasswordEncoder pwenc = passwordEncoder();
+
+        authmanagerbuilder
+        .userDetailsService(userDetailService)
+        .passwordEncoder(passwordEncoder());
 
         authmanagerbuilder.inMemoryAuthentication()
             .withUser("friedfert")
@@ -28,11 +36,26 @@ public class ProjektSecurityConfig extends WebSecurityConfigurerAdapter{
             .withUser("joghurta")
             .password("chefin")
             .roles("ADMIN");
+        
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .anyRequest().authenticated();
+            .antMatchers("/registrieren", "/logout").permitAll()
+            .antMatchers("/login").permitAll()
+            .antMatchers("/h2-console/**").permitAll()
+            .anyRequest().authenticated()
+        .and()
+            .formLogin()
+            .defaultSuccessUrl("/benutzerprofil")
+            .permitAll()
+        .and()
+            .httpBasic()
+        .and()
+        .csrf()
+        .ignoringAntMatchers("/h2-console/**");
+
+        http.headers().frameOptions().disable();
     }
 }

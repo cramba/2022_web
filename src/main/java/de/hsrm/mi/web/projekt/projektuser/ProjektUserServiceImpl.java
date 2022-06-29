@@ -9,32 +9,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjektUserServiceImpl implements ProjektUserService{
 
-    
-    private final ProjektUserRepository projektUserRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public ProjektUserServiceImpl(ProjektUserRepository projektUserRepository, PasswordEncoder passwordEncoder) {
-        this.projektUserRepository = projektUserRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    @Autowired private  ProjektUserRepository projektUserRepository;
+    @Autowired private  PasswordEncoder passwordEncoder;
 
     @Override
     public ProjektUser neuenBenutzerAnlegen(String username, String klartextpasswort, String rolle) {
         // TODO Auto-generated method stub
         ProjektUser user = new ProjektUser();
         user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(klartextpasswort)); //PASSWORT NOCH ENCODEN
+        if(projektUserRepository.existsById(username)){
+            throw new ProjektUserServiceException("Es existiert bereits ein Nutzer mit dem Namen: " + username);
+        }
+        user.setPassword(passwordEncoder.encode(klartextpasswort)); 
         if(rolle.isEmpty() || rolle == null){
-            user.setRole("");
+            user.setRole("USER");
         }else {
             user.setRole(rolle);
         }
-        try{
-            return projektUserRepository.save(user);
-        }catch(Exception e){
-            throw new ProjektUserServiceException("Es existiert bereits ein Nutzer mit dem Namen: " + username);
-        }
+        return projektUserRepository.save(user);
     }
 
     @Override
