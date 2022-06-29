@@ -42,9 +42,11 @@ public class ProjektSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+            .antMatchers("/api/**").permitAll()
             .antMatchers("/registrieren", "/logout").permitAll()
             .antMatchers("/login").permitAll()
             .antMatchers("/h2-console/**").permitAll()
+            .antMatchers("/topic/**").permitAll()
             .anyRequest().authenticated()
         .and()
             .formLogin()

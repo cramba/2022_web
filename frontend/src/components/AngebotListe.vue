@@ -3,7 +3,7 @@ import AngebotListeItem from '@/components/AngebotListeItem.vue'
 import { useAngebot } from '@/services/useAngebot';
 import { useFakeAngebot } from '@/services/useFakeAngebot'
 import { ref, computed } from 'vue'
-const {angebotliste} = useAngebot().angebote
+const {angebote} = useAngebot()
 
 
 const suchfeld = ref("")
@@ -15,9 +15,9 @@ function clearSuchfeld(){
 const angebotefiltered = computed(() => {
     const n: number = suchfeld.value.length;
     if(suchfeld.value.length < 3) {
-        return angebotliste
+        return angebote.angebotliste
     } else {
-        return angebotliste.filter(e =>
+        return angebote.angebotliste.filter(e =>
             e.beschreibung.toLowerCase().includes(suchfeld.value.toLocaleLowerCase())||
             e.abholort.toLowerCase().includes(suchfeld.value.toLocaleLowerCase())||
             e.anbietername.toLowerCase().includes(suchfeld.value.toLocaleLowerCase())

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useAngebot, updateAngebote, receiveAngebotMessages } from '@/services/useAngebot';
+import { onMounted } from 'vue';
 
 import AngebotListe from '../components/AngebotListe.vue'
 
 const {angebote} = useAngebot()
+//onMounted(receiveAngebotMessages)
 receiveAngebotMessages()
 const errorMessage = angebote.errormessage
 let anzAngebote = angebote.angebotliste.length
