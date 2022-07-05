@@ -5,17 +5,22 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerprofilService;
+import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
+import de.hsrm.mi.web.projekt.messaging.BackendInfoMessage.BackendOperation;
 
 
 
 @Service
 public class GebotServiceImpl implements GebotService {
 
+    @Autowired
+    private SimpMessagingTemplate messaging;
     
     private final GebotRepository gebotRepository;
     private final BenutzerprofilService benutzerprofilService;
@@ -25,6 +30,9 @@ public class GebotServiceImpl implements GebotService {
         this.gebotRepository = gebotRepository;
         this.benutzerprofilService = benutzerprofilService;
     }
+
+    @Autowired
+    BackendInfoServiceImpl backendInfoService;
 
     @Override
     public List<Gebot> findeAlleGebote() {
@@ -47,6 +55,7 @@ public class GebotServiceImpl implements GebotService {
             gebot.setBetrag(betrag);
             gebot.setGebotszeitpunkt(LocalDateTime.now());
             //return gebot;
+            backendInfoService.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.CREATE, gebot.getId());
             return gebotRepository.save(gebot);
         }else {
             Gebot neuesGebot = new Gebot();
@@ -55,7 +64,9 @@ public class GebotServiceImpl implements GebotService {
             neuesGebot.setAngebot(benutzerprofilService.findeAngebotMitId(angebotid).get());
             benutzerprofilService.findeAngebotMitId(angebotid).get().getGebote().add(neuesGebot);
             benutzerprofilService.holeBenutzerProfilMitId(benutzerprofilid).get().getGebote().add(neuesGebot);
+            backendInfoService.sendInfo("/topic/gebot/" + neuesGebot.getId(), BackendOperation.UPDATE, neuesGebot.getId());
             return gebotRepository.save(neuesGebot);
+            
         }
     }
 
