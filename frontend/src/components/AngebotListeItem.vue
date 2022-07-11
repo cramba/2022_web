@@ -23,7 +23,7 @@ function toggleTable(){
 <template>
     <table class="steelBlueColors">
         <thead>
-            <th style="width:40%">{{props.angebot.beschreibung}}</th>
+            <RouterLink to="/gebot{{props.angebot.angebotid}}"><th style="width:40%">{{props.angebot.beschreibung}}</th></RouterLink>
             <th style="width:20%">{{props.angebot.gebote}} Gebote</th>
             <th style="width:20%">{{props.angebot.topgebot}} EUR</th>
             <th v-if="showTable" style="width:20%"><Button id="showInfo" @click="toggleTable()">zuklappen</Button></th>

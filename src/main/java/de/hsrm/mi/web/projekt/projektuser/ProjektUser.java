@@ -50,7 +50,7 @@ public class ProjektUser {
         this.role = role;
     }
 
-    public BenutzerProfil getBenutzerprofil() {
+    public BenutzerProfil getBenutzerProfil() {
         return benutzerprofil;
     }
 

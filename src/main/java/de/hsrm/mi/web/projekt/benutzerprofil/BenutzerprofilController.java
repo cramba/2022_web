@@ -53,7 +53,7 @@ public class BenutzerprofilController {
         //m.addAttribute("profil", profil);
         m.addAttribute("sprache", locale.getDisplayLanguage());
         if(prinz != null){
-            profil = projektUserService.findeBenutzer(prinz.getName()).getBenutzerprofil();
+            profil = projektUserService.findeBenutzer(prinz.getName()).getBenutzerProfil();
         }
         m.addAttribute("profil", profil);
 

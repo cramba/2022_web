@@ -1,6 +1,7 @@
 import { reactive, readonly } from "vue";
 
 import { Client } from '@stomp/stompjs';
+
 const wsurl = `ws://${window.location.host}/stompbroker`
 
 import { useLogin } from '@/services/useLogin'
@@ -15,6 +16,8 @@ export function useGebot(angebotid: number) {
 
     // STOMP-Destination
     const DEST = `/topic/gebot/${angebotid}`
+    
+
 
     ////////////////////////////////
 
@@ -41,7 +44,8 @@ export function useGebot(angebotid: number) {
 
 
 
-    const gebotState = /* reaktives Objekt auf Basis des Interface <IGebotState> */
+    /* reaktives Objekt auf Basis des Interface <IGebotState> */
+    const gebotState = reactive<IGebotState>({angebotid: 0, topgebot: 0, topbieter: "", gebotliste: [], receivingMessages: false, errormessage: "" })
     
 
 
@@ -49,12 +53,26 @@ export function useGebot(angebotid: number) {
         const dtos = JSON.stringify(gebotDTO)
         console.log(`processGebot(${dtos})`)
 
+        const gebot = gebotState.gebotliste.find((e) => e.gebieterid === gebotDTO.gebieterid)
+        
+        if (gebot == undefined) {
+            gebotState.gebotliste.push(gebotDTO)
+        }else {
+            gebot.betrag = gebotDTO.betrag
+            gebot.gebotzeitpunkt = gebotDTO.gebotzeitpunkt
+        }
+
+       
         /*
          * suche Angebot für 'gebieter' des übergebenen Gebots aus der gebotliste (in gebotState)
          * falls vorhanden, hat der User hier schon geboten und das Gebot wird nur aktualisiert (Betrag/Gebot-Zeitpunkt)
          * falls nicht, ist es ein neuer Bieter für dieses Angebot und das DTO wird vorne in die gebotliste des State-Objekts aufgenommen
          */
 
+        if (gebotDTO.betrag > gebotState.topgebot){
+            gebotState.topbieter = gebotDTO.gebietername
+            gebotState.topgebot = gebotDTO.betrag
+        }
 
         /*
          * Falls gebotener Betrag im DTO größer als bisheriges topgebot im State,
@@ -66,6 +84,31 @@ export function useGebot(angebotid: number) {
 
 
     function receiveGebotMessages() {
+
+        const stompclient = new Client({brokerURL: wsurl})
+
+        stompclient.onWebSocketError = (event) => { 
+            /* WS-Fehler */
+            gebotState.receivingMessages = false
+            gebotState.errormessage = "WS-Fehler"
+        }
+        stompclient.onStompError = (frame) => { 
+            /* STOMP-Fehler */ 
+            gebotState.receivingMessages = false
+            gebotState.errormessage = "STOMP Fehler"
+        }
+
+        stompclient.onConnect = (frame) => {
+            stompclient.subscribe(DEST, (message) => {
+                const empfangen:IGetGebotResponseDTO = JSON.parse(message.body)
+                processGebotDTO(empfangen)
+                gebotState.receivingMessages = true
+            })
+        }
+        stompclient.activate();
+        
+
+
         /*
          * analog zu Message-Empfang bei Angeboten
          * wir verbinden uns zur brokerURL (s.o.),
@@ -85,7 +128,40 @@ export function useGebot(angebotid: number) {
     }
 
 
+
     async function updateGebote() {
+
+        console.log("UPDATE GEBOTE")
+        fetch('/api/gebot')
+        .then(resp => {
+            if (!resp.ok) {
+                gebotState.gebotliste = [];
+                gebotState.errormessage = resp.statusText
+                console.log("fehler beim Response")
+                throw new Error(resp.statusText);
+            }
+            return resp.json();
+        })
+        .then((jsondata: IGetGebotResponseDTO[]) => {
+            gebotState.gebotliste = jsondata.filter(d => d.angebotid == angebotid)
+            receiveGebotMessages()
+
+            let max = 0
+            gebotState.gebotliste.forEach(gebot => {
+                if (gebot.betrag > max){
+                    gebotState.topgebot = gebot.betrag
+                    gebotState.topbieter = gebot.gebietername
+                }
+            })
+
+            gebotState.errormessage= ""
+
+
+        })
+        .catch(reason => {
+            gebotState.gebotliste = []
+            gebotState.errormessage = reason
+        })
         /*
          * holt per fetch() auf Endpunkt /api/gebot die Liste aller Gebote ab
          * (Array vom Interface-Typ IGetGebotResponseDTO, s.o.)
@@ -101,8 +177,7 @@ export function useGebot(angebotid: number) {
          * und 'errormessage' auf die Fehlermeldung geschrieben.
          */
 
-        console.log("UPDATE GEBOTE")
-        fetch('/api/gebot')
+        
 
 
     }
@@ -115,7 +190,28 @@ export function useGebot(angebotid: number) {
         betrag: number
     }
 
+    
+
     async function sendeGebot(betrag: number) {
+        const angebot = gebotState.gebotliste.find(x => x.angebotid === angebotid)
+        const neuesGebot = <IAddGebotRequestDTO>({benutzerprofilid: angebot!.gebieterid, angebotid: angebotid, betrag: betrag})
+        const response = await fetch('/api/gebot', {
+            method: 'POST',
+            body: JSON.stringify(neuesGebot)
+        })
+        .then(resp => {
+            if (!resp.ok) {
+                gebotState.errormessage=""
+                return resp.json()
+            }
+        })
+        .catch(reason => {  
+            gebotState.errormessage=reason
+        })
+
+        const idvalue = response.text()
+        console.log(idvalue)
+        
         /*
          * sendet per fetch() POST auf Endpunkt /api/gebot ein eigenes Gebot,
          * schickt Body-Struktur gemäß Interface IAddGebotRequestDTO als JSON,
@@ -124,8 +220,8 @@ export function useGebot(angebotid: number) {
          * bei Fehler auf die Fehlermeldung
          */
 
-
     }
+    
 
     // Composition Function -> gibt nur die nach außen freigegebenen Features des Moduls raus
     return {
@@ -134,4 +230,6 @@ export function useGebot(angebotid: number) {
         sendeGebot
     }
 }
+
+
 

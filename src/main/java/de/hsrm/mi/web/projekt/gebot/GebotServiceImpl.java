@@ -9,6 +9,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import de.hsrm.mi.web.projekt.angebot.Angebot;
+import de.hsrm.mi.web.projekt.api.gebot.GetGebotResponseDTO;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerProfil;
 import de.hsrm.mi.web.projekt.benutzerprofil.BenutzerprofilService;
 import de.hsrm.mi.web.projekt.messaging.BackendInfoServiceImpl;
@@ -55,7 +56,9 @@ public class GebotServiceImpl implements GebotService {
             gebot.setBetrag(betrag);
             gebot.setGebotszeitpunkt(LocalDateTime.now());
             //return gebot;
-            backendInfoService.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.CREATE, gebot.getId());
+            GetGebotResponseDTO.from(gebot);
+            messaging.convertAndSend("/topic/gebot/" + gebot.getId(), GetGebotResponseDTO.from(gebot));
+            //backendInfoService.sendInfo("/topic/gebot/" + gebot.getId(), BackendOperation.CREATE, gebot.getId());
             return gebotRepository.save(gebot);
         }else {
             Gebot neuesGebot = new Gebot();
@@ -64,7 +67,8 @@ public class GebotServiceImpl implements GebotService {
             neuesGebot.setAngebot(benutzerprofilService.findeAngebotMitId(angebotid).get());
             benutzerprofilService.findeAngebotMitId(angebotid).get().getGebote().add(neuesGebot);
             benutzerprofilService.holeBenutzerProfilMitId(benutzerprofilid).get().getGebote().add(neuesGebot);
-            backendInfoService.sendInfo("/topic/gebot/" + neuesGebot.getId(), BackendOperation.UPDATE, neuesGebot.getId());
+            messaging.convertAndSend("/topic/gebot/" + neuesGebot.getId(), GetGebotResponseDTO.from(neuesGebot));
+            //backendInfoService.sendInfo("/topic/gebot/" + neuesGebot.getId(), BackendOperation.UPDATE, neuesGebot.getId());
             return gebotRepository.save(neuesGebot);
             
         }
